@@ -3,6 +3,12 @@ Face Recognition Based Voting System with DeepFace recognition, Tkinter GUI, OTP
 
 
 face-voting-system/
+
+
  ├─ templates/  ...all the html files
+
+ 
  ├─ add_faces.py
+
+ 
  └─ give_vote.py
