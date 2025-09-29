@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard - Cards with Modal Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(120deg, #f2f5fa 60%, #e5f3fe 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+        .dashboard-cards {
+            max-width: 800px;
+            margin: 60px auto;
+            display: grid;
+            gap: 28px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+        .admin-card {
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 6px 36px rgba(23,36,49,.09);
+            padding: 0;
+        }
+        .admin-card .card-header {
+            background: #fafcfe;
+            color: #234b86;
+            font-weight: bold;
+            border-bottom: none;
+            border-radius: 18px 18px 0 0;
+            font-size: 1.2rem;
+        }
+        .admin-card .card-body {
+            padding: 32px 22px 28px 22px;
+        }
+        .admin-card .btn { font-size: 1.12rem; }
+    </style>
+</head>
+<body>
+    <h1 class="text-center my-4" style="color:#234b86;font-weight:700;">🗳️ Face Voting Admin Dashboard</h1>
+    <div class="dashboard-cards">
+        <div class="card admin-card">
+            <div class="card-header">Voter Management</div>
+            <div class="card-body">
+                <a href="{{ url_for('add_faces_route') }}" 
+                   class="btn btn-success w-100 mb-3" 
+                   data-bs-toggle="tooltip" title="Register a new voter face">
+                   ➕ Register New Face
+                </a>
+                <a href="{{ url_for('start_voting_station_route') }}" 
+                   class="btn btn-primary w-100 mb-3" 
+                   data-bs-toggle="tooltip" title="Launch voting station">
+                   🗳️ Start Voting Station
+                </a>
+            </div>
+        </div>
+        <div class="card admin-card">
+            <div class="card-header">Election Management</div>
+            <div class="card-body">
+                <a href="{{ url_for('dashboard_live_route') }}" 
+                   class="btn btn-warning w-100 mb-3" 
+                   data-bs-toggle="tooltip" title="View live vote dashboard with real-time results">
+                   📊 View Live Vote Dashboard
+                </a>
+                <a href="{{ url_for('choose_election') }}" 
+                   class="btn btn-warning w-100 mb-3" 
+                   data-bs-toggle="tooltip" title="Choose which election to manage or vote in">
+                   🏛️ चुनाव चुनें / Choose Election Type
+                </a>
+            </div>
+        </div>
+        <div class="card admin-card">
+            <div class="card-header">📊 Election Results</div>
+            <div class="card-body">
+                <a href="{{ url_for('results_vidhan') }}" 
+                   class="btn btn-info w-100 mb-2" 
+                   data-bs-toggle="tooltip" title="View the current Vidhan Sabha election results">
+                   View Vidhan Sabha Results
+                </a>
+                <a href="{{ url_for('results_loksabha') }}" 
+                   class="btn btn-info w-100 mb-2" 
+                   data-bs-toggle="tooltip" title="View the current Lok Sabha election results">
+                   View Lok Sabha Results
+                </a>
+                <a href="{{ url_for('results_rajya') }}" 
+                   class="btn btn-info w-100 mb-2" 
+                   data-bs-toggle="tooltip" title="View the current Rajya Sabha election results">
+                   View Rajya Sabha Results
+                </a>
+                <a href="{{ url_for('results_panchayat') }}" 
+                   class="btn btn-info w-100" 
+                   data-bs-toggle="tooltip" title="View the current Panchayat election results">
+                   View Panchayat Results
+                </a>
+            </div>
+        </div>
+        <div class="card admin-card">
+            <div class="card-header">Data & Session</div>
+            <div class="card-body">
+                <form id="clear-data-form" action="{{ url_for('clear_data') }}" method="post" class="mb-3">
+                    <button type="button" class="btn btn-danger w-100"
+                            data-bs-toggle="tooltip" title="Remove ALL voting data permanently!"
+                            data-bs-target="#confirmClearModal" data-bs-toggle="modal">
+                        🗑️ Remove All Vote & Voter Data
+                    </button>
+                </form>
+                <form action="{{ url_for('logout') }}" method="get">
+                    <button type="submit" class="btn btn-secondary w-100"
+                            data-bs-toggle="tooltip" title="Logout from admin panel">
+                        🚪 Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmClearModal" tabindex="-1" aria-labelledby="confirmClearLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="confirmClearLabel">Confirm Data Deletion</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to remove <strong>all vote and voter data</strong>? This action is irreversible.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button id="confirmClearBtn" type="button" class="btn btn-danger">Yes, Remove All Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+
+      // Submit form on modal confirmation
+      document.getElementById('confirmClearBtn').addEventListener('click', function () {
+        document.getElementById('clear-data-form').submit();
+      })
+    </script>
+</body>
+</html>

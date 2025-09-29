@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Welcome to Face Recognised Voting System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #f8fafc 70%, #e2ebf0 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+      transition: background 0.4s;
+    }
+    [data-theme="dark"] body {
+      background: linear-gradient(120deg, #101728 80%, #1a222c 100%);
+      color: #f8fafc;
+    }
+    .welcome-box {
+      max-width: 540px;
+      margin: 68px auto;
+      padding: 38px 32px 34px 32px;
+      border-radius: 30px;
+      background: #fff;
+      box-shadow: 0 7px 40px rgba(23,36,49,0.11);
+      text-align: center;
+      border: 1px solid #e4e7ef;
+    }
+    [data-theme="dark"] .welcome-box {
+      background: #151d29;
+      color: #eaf2fd;
+      border: 1px solid #27334e;
+    }
+    .crest-emblem {
+      width: 54px; height: 54px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/2/2d/State_emblem_of_India.svg') no-repeat center center;
+      background-size: contain; display: inline-block; vertical-align: middle;
+      filter: grayscale(0.2) brightness(0.99);
+    }
+    .welcome-title {
+      font-size: 2.15rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: .01em;
+      color: #175393;
+      display: flex; align-items: center; justify-content: center; gap: 18px;
+    }
+    [data-theme="dark"] .welcome-title { color: #f7ad13; }
+    .desc { color: #556; margin-bottom: 26px; font-size: 1.07rem; }
+    [data-theme="dark"] .desc { color: #bcd; }
+    .toggle-wrap { position:absolute; top:30px; right:42px; display: flex; gap:14px; }
+    .toggle-wrap > * { vertical-align: middle; }
+    .btn-theme, .btn-lang {
+      border-radius: 999px; padding: 7px 17px; font-size: 1rem; font-weight: 500; margin-left:8px;
+      border: none;
+      cursor: pointer;
+      background: #f6f7fa;
+      color: #234b86;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-theme:hover, .btn-lang:hover { background:#198754; color:white; }
+    [data-theme="dark"] .btn-theme, [data-theme="dark"] .btn-lang { background:#323f52; color:#ffb91a; }
+    .feature-list { margin:28px 0 0 0; display: flex; flex-direction: column; gap:18px; }
+    .feature-list .feature {
+      background: #f5f8fa; border-radius: 8px; padding: 14px 18px; text-align: left;
+      display: flex; align-items: center; gap: 14px; font-size: 1.03rem; color: #233556; box-shadow:0 1px 9px #3136460a;
+    }
+    [data-theme="dark"] .feature-list .feature { background: #29344a; color: #f3e3bd; }
+    .feature .bi { font-size: 1.6rem; margin-right: 6px; }
+    .btn-main {
+      font-size: 1.19rem; font-weight: 600; letter-spacing: .01em; padding: 14px 0 11px 0; width:46%;
+      margin:10px 2%; border: none; border-radius:999px;
+    }
+    .btn-sign { background: #146d2a; color: #fff; }
+    .btn-sign:hover { background:#198754; }
+    .btn-login { background: #234b86; color: #fff; }
+    .btn-login:hover { background:#163059; }
+    .footer-gov {
+      text-align: center; color: #5d6470; font-size: 0.98rem; margin-top: 66px; opacity: 0.8;
+    }
+    @media (max-width:660px) {
+      .welcome-box {padding: 22px 4vw;}
+      .toggle-wrap { top:16px; right:16px;}
+      .feature-list .feature { font-size: 0.98rem; }
+      .btn-main { width: 98%; margin: 12px 0;}
+    }
+  </style>
+  <!-- Bootstrap icons CDN (for feature icons) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="toggle-wrap">
+      <button class="btn-theme" onclick="toggleTheme()" title="Toggle dark mode"><span id="themeIcon" class="bi bi-moon-stars-fill"></span></button>
+      <button class="btn-lang" onclick="toggleLang()" title="Change Language"><span id="langText">हिन्दी</span></button>
+    </div>
+    <div class="welcome-box">
+      <div class="welcome-title">
+        <span class="crest-emblem"></span>
+        Welcome to Face Recognised Voting System
+      </div>
+      <div class="desc" id="desc">
+        Government e-Voting platform using Face Recognition — Secure, Transparent, and Modern Elections.
+      </div>
+      <div>
+        <a href="{{ url_for('login') }}" class="btn btn-login btn-main mb-2">Login</a>
+        <a href="{{ url_for('signup') }}" class="btn btn-sign btn-main mb-2">Sign Up</a>
+      </div>
+      <div class="feature-list">
+        <div class="feature"><span class="bi bi-person-badge-fill"></span> Face Enabled Voting & Voter Registration</div>
+        <div class="feature"><span class="bi bi-person-check"></span> Secure Admin Access with Password & Captcha</div>
+        <div class="feature"><span class="bi bi-pie-chart"></span> Live Dashboard & Real-Time Results</div>
+        <div class="feature"><span class="bi bi-globe2"></span> Multi-lingual Support & Accessibility Tools</div>
+      </div>
+    </div>
+    <div class="footer-gov">
+      © 2025 National Informatics Centre | Ministry of Electronics &amp; Information Technology, Government of India
+    </div>
+
+    <script>
+    // Theme toggle
+    function toggleTheme() {
+      let dt = document.documentElement.getAttribute('data-theme');
+      if (dt === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        document.getElementById('themeIcon').className = "bi bi-moon-stars-fill";
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeIcon').className = "bi bi-sun-fill";
+      }
+    }
+    // Language toggle (basic demo, you can expand with advanced i18n)
+    function toggleLang() {
+      let lang = document.getElementById('langText').innerText === 'English';
+      document.getElementById('langText').innerText = lang ? 'हिन्दी' : 'English';
+      document.querySelector('.welcome-title').innerHTML = lang
+        ? `<span class='crest-emblem'></span> Welcome to Face Recognised Voting System`
+        : `<span class='crest-emblem'></span> फेस रेकग्निशन वोटिंग प्रणाली में आपका स्वागत है`;
+      document.getElementById('desc').innerText = lang
+        ? 'Government e-Voting platform using Face Recognition — Secure, Transparent, and Modern Elections.'
+        : 'सरकारी चेहरा आधारित ई-वोटिंग प्लेटफ़ॉर्म — सुरक्षित, पारदर्शी एवं आधुनिक चुनाव।';
+      // Change button text for login/signup as desired
+      document.querySelector('.btn-login').innerText = lang ? 'Login' : 'लॉगिन';
+      document.querySelector('.btn-sign').innerText = lang ? 'Sign Up' : 'रजिस्टर करें';
+      // Features
+      document.querySelectorAll('.feature')[0].innerHTML = lang
+        ? "<span class='bi bi-person-badge-fill'></span> Face Enabled Voting & Voter Registration"
+        : "<span class='bi bi-person-badge-fill'></span> फेस इनेबल्ड वोटिंग और वोटर पंजीकरण";
+      document.querySelectorAll('.feature')[1].innerHTML = lang
+        ? "<span class='bi bi-person-check'></span> Secure Admin Access with Password & Captcha"
+        : "<span class='bi bi-person-check'></span> पासवर्ड और कैप्चा के साथ सुरक्षित एडमिन लॉगिन";
+      document.querySelectorAll('.feature')[2].innerHTML = lang
+        ? "<span class='bi bi-pie-chart'></span> Live Dashboard & Real-Time Results"
+        : "<span class='bi bi-pie-chart'></span> लाइव डैशबोर्ड और रीयल-टाइम परिणाम";
+      document.querySelectorAll('.feature')[3].innerHTML = lang
+        ? "<span class='bi bi-globe2'></span> Multi-lingual Support & Accessibility Tools"
+        : "<span class='bi bi-globe2'></span> बहुभाषी समर्थन और सुविधा टूल्स";
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>चुनाव का चयन करें / Choose Election Type</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body { background: #f7f8fa; }
+    .choice-box {
+      max-width: 540px;
+      margin: 80px auto;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 6px 38px #2a315822;
+      padding: 38px 30px;
+      text-align: center;
+    }
+    .choice-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #134b55;
+      margin-bottom: 30px;
+    }
+    .election-btn {
+      font-size: 1.3rem;
+      padding: 30px 0;
+      border-radius: 14px;
+      font-weight: 600;
+      margin-bottom: 22px;
+      border: none;
+      width: 100%;
+      box-shadow: 0 2px 12px #22336614;
+      transition: background 0.2s;
+    }
+    .btn-vidhan {
+      background: #ddf1e7;
+      color: #145d39;
+    }
+    .btn-vidhan:hover {
+      background: #bceddb;
+    }
+    .btn-lok {
+      background: #e9e7fa;
+      color: #3b2b85;
+    }
+    .btn-lok:hover {
+      background: #c0b6f2;
+    }
+    .btn-rajya {
+      background: #fef4e4;
+      color: #af7007;
+    }
+    .btn-rajya:hover {
+      background: #ffe2b7;
+    }
+    .btn-panchayat {
+      background: #e6fbed;
+      color: #12776b;
+    }
+    .btn-panchayat:hover {
+      background: #a4f1dc;
+    }
+  </style>
+</head>
+<body>
+  <div class="choice-box">
+    <div class="choice-title">चुनाव का चयन करें<br>Select Election Type</div>
+    <form action="{{ url_for('choose_election') }}" method="post">
+      <button name="chunav" value="vidhansabha" type="submit" class="election-btn btn-vidhan mb-2">
+        🏛️ विधानसभा चुनाव<br>Vidhan Sabha (State Assembly)
+      </button>
+      <button name="chunav" value="loksabha" type="submit" class="election-btn btn-lok mb-2">
+        🏛️ लोकसभा चुनाव<br>Lok Sabha (Parliament)
+      </button>
+      <button name="chunav" value="rajyasabha" type="submit" class="election-btn btn-rajya mb-2">
+        🏛️ राज्यसभा चुनाव<br>Rajya Sabha (Council of States)
+      </button>
+      <button name="chunav" value="panchayat" type="submit" class="election-btn btn-panchayat">
+        🏡 पंचायत चुनाव<br>Panchayat Election
+      </button>
+    </form>
+  </div>
+</body>
+</html>
