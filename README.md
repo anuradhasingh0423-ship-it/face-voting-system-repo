@@ -12,3 +12,5 @@ face-voting-system/
 
  
  └─ give_vote.py
+
+ other py files.
