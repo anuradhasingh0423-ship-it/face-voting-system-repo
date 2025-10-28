@@ -400,14 +400,3 @@ check_btn.pack(pady=10)
 
 root.mainloop()
 
-
-
-
-
-
-
-
-
-
-
-
