@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Face Recognition Voting | Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        /* Mimicking welcome.html body and general styles */
+        body {
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background: linear-gradient(120deg, #f8fafc 70%, #e2ebf0 100%);
+            color: #101728; /* Dark text color from welcome.html's dark-mode equivalent */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 0; /* No top border space */
+        }
+        
+        /* Mimicking welcome.html header/toggle area */
+        .header {
+            background: none; /* No colored header bar */
+            color: #175393;
+            display: flex;
+            justify-content: flex-end; /* Push button to the right */
+            align-items: center;
+            padding: 30px 42px 0 30px; /* Position similar to toggle-wrap */
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        .top-border, .footer-border {
+            display: none; /* Remove Indian flag borders */
+        }
+
+        /* Mimicking welcome.html buttons (btn-lang/btn-theme) */
+        .language-toggle {
+            border-radius: 999px;
+            padding: 7px 17px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            background: #f6f7fa;
+            color: #234b86;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .language-toggle:hover {
+            background-color: #198754;
+            color: white;
+        }
+
+        /* Mimicking welcome.html welcome-box */
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px 35px;
+            border-radius: 30px; /* Larger radius like welcome-box */
+            box-shadow: 0 7px 40px rgba(23, 36, 49, 0.11); /* Soft shadow like welcome-box */
+            max-width: 420px;
+            width: 100%;
+            margin: auto; /* Center vertically and horizontally */
+            border: 1px solid #e4e7ef; /* Subtle border like welcome-box */
+            border-top: none; /* Remove the orange top border */
+            text-align: center;
+        }
+
+        .form-container h2 {
+            margin-bottom: 30px;
+            font-weight: 600; /* Matching welcome-title weight */
+            color: #175393; /* Matching welcome-title color */
+        }
+
+        /* Mimicking welcome.html action buttons (btn-login/btn-sign) */
+        .btn {
+            width: 100%;
+            font-size: 1.19rem; /* Matching action button size */
+            padding: 14px 0 11px 0; /* Matching action button padding */
+            margin-bottom: 20px;
+            border-radius: 999px; /* Matching action button shape */
+            font-weight: 600;
+            border: none;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        /* Match button colors from welcome.html (Sign Up is Green, Login is Blue) */
+        .btn-voter {
+            /* Sign Up color in welcome.html is a strong green */
+            background-color: #146d2a;
+            color: #fff;
+        }
+
+        .btn-voter:hover {
+            background-color: #198754;
+            transform: scale(1.03);
+        }
+
+        .btn-admin {
+            /* Login color in welcome.html is a strong blue */
+            background-color: #234b86;
+            color: #fff;
+        }
+
+        .btn-admin:hover {
+            background-color: #163059;
+            transform: scale(1.03);
+        }
+        
+        /* Mimicking welcome.html footer */
+        footer {
+            background: none; /* No dark footer background */
+            color: #5d6470; /* Color from welcome.html footer */
+            text-align: center;
+            padding: 12px 0;
+            font-size: 0.98rem; /* Size from welcome.html footer */
+            margin-top: auto;
+            opacity: 0.8;
+            letter-spacing: 0;
+            margin-bottom: 20px; /* Add some space at the bottom */
+        }
+        
+        @media (max-width:660px) {
+            .header {
+                padding: 16px 16px 0 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-border"></div>
+
+    <header class="header">
+        <button id="lang-toggle" class="language-toggle">हिन्दी</button>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-3">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main class="container d-flex flex-grow-1"> <div class="form-container">
+            <h2 id="select-text">Select Registration Type</h2>
+            <a href="{{ url_for('voter_registration') }}" class="btn btn-voter" id="voter-btn">Voter Registration</a>
+            <a href="{{ url_for('admin_register') }}" class="btn btn-admin" id="admin-btn">Admin Registration</a>
+        </div>
+    </main>
+
+    <footer id="footer-text">
+        © Election Commission of India — Demo Portal
+    </footer>
+    <div class="footer-border"></div>
+
+    <script>
+        const langToggle = document.getElementById("lang-toggle");
+        let isHindi = false;
+
+        const texts = {
+            en: {
+                select: "Select Registration Type",
+                voter: "Voter Registration",
+                admin: "Admin Registration",
+                footer: "© Election Commission of India — Demo Portal",
+                toggle: "हिन्दी"
+            },
+            hi: {
+                select: "पंजीकरण प्रकार चुनें",
+                voter: "मतदाता पंजीकरण",
+                admin: "प्रशासक पंजीकरण",
+                footer: "© भारत निर्वाचन आयोग — डेमो पोर्टल",
+                toggle: "English"
+            }
+        };
+
+        langToggle.addEventListener("click", () => {
+            isHindi = !isHindi;
+            const lang = isHindi ? texts.hi : texts.en;
+
+            document.getElementById("select-text").textContent = lang.select;
+            document.getElementById("voter-btn").textContent = lang.voter;
+            document.getElementById("admin-btn").textContent = lang.admin;
+            document.getElementById("footer-text").textContent = lang.footer;
+            langToggle.textContent = lang.toggle;
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

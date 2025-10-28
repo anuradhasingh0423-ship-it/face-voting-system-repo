@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>लोकसभा चुनाव / Lok Sabha Election</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container py-5">
+    <h2 class="mb-4 text-center">लोकसभा चुनाव पृष्ठ / Lok Sabha Voting Page</h2>
+    <form method="post" action="/submit_loksabha_vote">
+      <div class="mb-3">
+        <label for="candidate" class="form-label">कृपया उम्मीदवार चुनें / Please select a candidate</label>
+        <select class="form-select" id="candidate" name="candidate" required>
+          <option value="">--Select--</option>
+          <option value="candidateX">Suresh Gopinath Mhatre (INC)</option>
+          <option value="candidateY">Kapil Moreshwar Patil (BJP)</option>
+          <option value="candidateZ">Manisha Santosh Gondhale (IND)</option>
+          <option value="candidateB">NOTA</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">वोट डालें / Submit Vote</button>
+      <a href="{{ url_for('dashboard') }}" class="btn btn-secondary ms-2">डैशबोर्ड / Dashboard</a>
+    </form>
+  </div>
+</body>
+</html>
