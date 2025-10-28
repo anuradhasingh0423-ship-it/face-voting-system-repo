@@ -8,5 +8,6 @@ gtts
 pygame
 matplotlib
 twilio            # if you use OTP via Twilio
-requests          # if your code sends HTTP requests
-virtualenvwrapper # only if you’re using it inside Python
+requests          
+virtualenvwrapper 
+
